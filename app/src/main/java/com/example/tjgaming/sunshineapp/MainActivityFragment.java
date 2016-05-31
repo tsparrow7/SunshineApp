@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -29,6 +32,13 @@ public class MainActivityFragment extends Fragment {
         weatherData.add("Sun 6/6 - Rainy - 75/63");
 
         View root = inflater.inflate(R.layout.fragment_main, container, false);
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),R.layout.list_item_forecast,R.id.list_item_forecast_textview,weatherData);
+
+        //get reference to listView and set adapter to listView
+        ListView listView = (ListView)root.findViewById(R.id.listview_forecast);
+        listView.setAdapter(arrayAdapter);
+
         return root;
     }
 }
