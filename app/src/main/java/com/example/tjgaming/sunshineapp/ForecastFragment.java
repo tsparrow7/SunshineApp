@@ -33,6 +33,8 @@ import java.util.ArrayList;
  */
 public class ForecastFragment extends Fragment {
 
+    public ArrayAdapter<String> mForecastAdapter;
+
     public ForecastFragment() {
     }
 
@@ -71,11 +73,11 @@ public class ForecastFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_main, container, false);
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),R.layout.list_item_forecast,R.id.list_item_forecast_textview,weatherData);
+        mForecastAdapter = new ArrayAdapter<>(getActivity(),R.layout.list_item_forecast,R.id.list_item_forecast_textview, weatherData);
 
         //get reference to listView and set adapter to listView
         ListView listView = (ListView)root.findViewById(R.id.listview_forecast);
-        listView.setAdapter(arrayAdapter);
+        listView.setAdapter(mForecastAdapter);
 
         return root;
     }
@@ -283,6 +285,16 @@ public class ForecastFragment extends Fragment {
                 e.printStackTrace();
             }
         return null;
+        }
+
+        @Override
+        protected void onPostExecute(String[] weatherData) {
+            if(weatherData != null) {
+                mForecastAdapter.clear();
+                for (String dayForecastStr : weatherData) {
+                    mForecastAdapter.add(dayForecastStr);
+                }
+            }
         }
     }
 
